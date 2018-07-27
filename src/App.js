@@ -1,25 +1,28 @@
 import React, { Component } from 'react';
 import './App.css';
+import FaArrowUp from 'react-icons/lib/fa/arrow-up';
+import FaArrowDown from 'react-icons/lib/fa/arrow-down';
+import FaTimesCircle from 'react-icons/lib/fa/times-circle';
 // import queryString from 'query-string'
 
 let defaultStyle = {
   color: '#fff'
 };
-let fakeServerData = {
-  user: {
-    name: 'Nicole',
-    playlists: [
-      {
-        name: 'my faves',
-        songs: [
-          {name: 'Beat it', duration:1345},
-          {name: 'Song 2', duration: 1236}, 
-          {name: 'Pinacoladas', duration: 70000}
-        ]
-      }
-    ]
-  },
-};
+// let fakeServerData = {
+//   user: {
+//     name: 'Nicole',
+//     playlists: [
+//       {
+//         name: 'my faves',
+//         songs: [
+//           {name: 'Beat it', duration:1345},
+//           {name: 'Song 2', duration: 1236}, 
+//           {name: 'Pinacoladas', duration: 70000}
+//         ]
+//       }
+//     ]
+//   },
+// };
 
 class PlaylistCounter extends Component {
   render() {
@@ -51,7 +54,7 @@ class Filter extends Component {
   render() {
     return (
       <div style={defaultStyle}>
-        <img/>
+        <img alt=""/>
         <input type="text" onKeyUp={event => this.props.onTextChange(event.target.value)}/>
       </div>
     );
@@ -61,18 +64,57 @@ class Filter extends Component {
 class Playlist extends Component {
   render() {
     let playlist = this.props.playlist;
+    let handleClick = this.props.handleClick;
+
     return (
-      <div style={{...defaultStyle, width:"25%", display:"inline-block"}}>
-        <img src={playlist.imageUrl} style={{width: '60px'}}/>
-        <h3>{playlist.name}</h3>
-        <ul>
+      <div style={{...defaultStyle, width:"25%", display:"inline-block"}} onClick={handleClick} id={playlist.id} >
+        <img alt="" src={playlist.imageUrl} id={playlist.id} style={{width: '60px'}}/>
+        <h3 id={playlist.id} >{playlist.name}</h3>
+{/*        <ul>
           {playlist.songs.map(song => 
-            <li>{song.name}</li>
+            <li key={song.id}>{song.name}</li>
           )}
-        </ul>
+        </ul>*/}
       </div>
     );
   }
+}
+
+class PlaylistTrackList extends Component {
+  render() {
+    let currentPlaylist = this.props.currentPlaylist
+    let songs = this.props.tracks && this.props.tracks.songs
+    return (
+      <div style={defaultStyle}>
+        <table>
+          <thead>
+            <tr>
+              <th>Song Title</th>
+              <th>Artist</th>
+              <th>Vote</th>
+            </tr>
+          </thead>
+          <tbody>
+            {songs.map(song =>
+              <tr key={song.id} >
+                <th>{song.name}</th>
+                <th>
+                  {song.artists.map(artist => 
+                    <span key={artist.name}>{artist.name} </span>
+                  )}
+                </th>
+                <th>
+                  <span className="up-icon"><FaArrowUp data-tag={currentPlaylist.id}/></span> &ensp;
+                  <span className="down-icon"><FaArrowDown data-tag={currentPlaylist.id}/></span>&ensp; 
+                  <span className="delete-icon"><FaTimesCircle data-tag={song.id}/></span>
+                </th>
+              </tr>
+            )}
+          </tbody>  
+        </table>        
+      </div>
+    );
+  }  
 }
 
 class App extends Component {
@@ -80,7 +122,8 @@ class App extends Component {
     super();
     this.state = {
       serverData: {},
-      filterString: ''
+      filterString: '',
+      currentPlaylist: ''
     }
   }
   componentDidMount() {
@@ -119,7 +162,9 @@ class App extends Component {
             .map(item => item.track)
             .map(trackData => ({
               name: trackData.name,
-              duration: trackData.duration_ms / 1000
+              duration: trackData.duration_ms / 1000,
+              id: trackData.id,
+              artists: trackData.artists
             }))
         })
         return playlists
@@ -128,16 +173,21 @@ class App extends Component {
     })
     .then(playlists => this.setState({
       playlists: playlists.map(item => {
-        console.log(item.trackDatas)
         return {
           name: item.name,
           imageUrl: item.images[0].url,
-          songs: item.trackDatas.slice(0,3)
+          songs: item.trackDatas,
+          id: item.id
         }
     })
     }))    
   
   }
+  handleClick = (event) => {
+    this.setState({currentPlaylist: event.target})
+    console.log(event.target)
+  }
+
   render() {
     let playlistToRender = 
       this.state.user && 
@@ -146,11 +196,16 @@ class App extends Component {
           playlist.name.toLowerCase().includes(
             this.state.filterString.toLowerCase())) 
         : [];
+    let playlistTracksToRender =
+      this.state.currentPlaylist &&
+      this.state.playlists
+        ? this.state.playlists.find(playlist => playlist.id === this.state.currentPlaylist.id)
+        : [];    
     return (
       <div className="App">
         {this.state.user ? 
         <div>
-          <h1 style={{...defaultStyle, 'font-size': "54px"}}>
+          <h1 style={{...defaultStyle, 'fontSize': "54px"}}>
             {this.state.user.name}'s Playlist
           </h1>   
           <PlaylistCounter playlists={playlistToRender}/>
@@ -159,15 +214,17 @@ class App extends Component {
             this.setState({filterString: text})
           }}/>
           {playlistToRender.map(playlist => 
-            <Playlist playlist={playlist}/>
+            <Playlist playlist={playlist} key={playlist.id} handleClick={this.handleClick}/>
           )}
         </div> : <button onClick={() => {
           window.location = window.location.href.includes('localhost')
             ? 'http://localhost:8888/login'
             : 'https://playlistparty-backend.herokuapp.com/' }
           }
-          style={{padding: '20px', 'font-size': '20px', 'margin-top': '20px'}}>Sign In to Spotify</button>
+          style={{padding: '20px', 'fontSize': '20px', 'marginTop': '20px'}}>Sign In to Spotify</button>
         }
+        {this.state.currentPlaylist &&
+          <PlaylistTrackList currentPlaylist={this.state.currentPlaylist} tracks={playlistTracksToRender}/>}
       </div>
     );
   }
