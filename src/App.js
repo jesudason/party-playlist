@@ -55,7 +55,7 @@ class Filter extends Component {
     return (
       <div style={defaultStyle}>
         <img alt=""/>
-        <input type="text" onKeyUp={event => this.props.onTextChange(event.target.value)}/>
+        <input type="text" onKeyUp={event => this.props.onTextChange(event.target.value)} placeholder="playlist search"/>
       </div>
     );
   }
@@ -67,14 +67,9 @@ class Playlist extends Component {
     let handleClick = this.props.handleClick;
 
     return (
-      <div style={{...defaultStyle, width:"25%", display:"inline-block"}} onClick={handleClick} id={playlist.id} >
-        <img alt="" src={playlist.imageUrl} id={playlist.id} style={{width: '60px'}}/>
+      <div className="playlist-div blue-red" onClick={handleClick} id={playlist.id} >
+        <img alt="" src={playlist.imageUrl} id={playlist.id}/>
         <h3 id={playlist.id} >{playlist.name}</h3>
-{/*        <ul>
-          {playlist.songs.map(song => 
-            <li key={song.id}>{song.name}</li>
-          )}
-        </ul>*/}
       </div>
     );
   }
@@ -85,7 +80,7 @@ class PlaylistTrackList extends Component {
     let currentPlaylist = this.props.currentPlaylist
     let songs = this.props.tracks && this.props.tracks.songs
     return (
-      <div style={defaultStyle}>
+      <div className="tracklist">
         <table>
           <thead>
             <tr>
@@ -185,7 +180,7 @@ class App extends Component {
   }
   handleClick = (event) => {
     this.setState({currentPlaylist: event.target})
-    console.log(event.target)
+    console.log(this.state.currentPlaylist)
   }
 
   render() {
@@ -205,17 +200,25 @@ class App extends Component {
       <div className="App">
         {this.state.user ? 
         <div>
-          <h1 style={{...defaultStyle, 'fontSize': "54px"}}>
-            {this.state.user.name}'s Playlist
-          </h1>   
-          <PlaylistCounter playlists={playlistToRender}/>
-          <HoursCounter playlists={playlistToRender}/>
-          <Filter onTextChange={text => {
-            this.setState({filterString: text})
-          }}/>
-          {playlistToRender.map(playlist => 
-            <Playlist playlist={playlist} key={playlist.id} handleClick={this.handleClick}/>
-          )}
+          <div className="header">
+            <h1>
+              {this.state.user.name}'s Playlist
+            </h1>   
+            <PlaylistCounter playlists={playlistToRender}/>
+            <HoursCounter playlists={playlistToRender}/>
+            <Filter onTextChange={text => {
+              this.setState({filterString: text})
+            }}/>
+          </div>
+          <div className="playlist-display">
+            {playlistToRender.map(playlist => 
+              <Playlist playlist={playlist} key={playlist.id} handleClick={this.handleClick}/>
+            )}
+          </div>
+
+          {this.state.currentPlaylist &&
+            <PlaylistTrackList currentPlaylist={this.state.currentPlaylist} tracks={playlistTracksToRender}/>}
+
         </div> : <button onClick={() => {
           window.location = window.location.href.includes('localhost')
             ? 'http://localhost:8888/login'
@@ -223,8 +226,6 @@ class App extends Component {
           }
           style={{padding: '20px', 'fontSize': '20px', 'marginTop': '20px'}}>Sign In to Spotify</button>
         }
-        {this.state.currentPlaylist &&
-          <PlaylistTrackList currentPlaylist={this.state.currentPlaylist} tracks={playlistTracksToRender}/>}
       </div>
     );
   }
