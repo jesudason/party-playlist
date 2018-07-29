@@ -6,9 +6,6 @@ export default class Playlist extends Component {
     return (
       <div className="profile-div">
         <img src={user.img} alt="" className="profile-pic"/>  
-        <h5>
-          {user.name}
-        </h5>
       </div>
     );
   }
