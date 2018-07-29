@@ -3,25 +3,108 @@ html {
 }
 
 .App {
+  margin: 0;
+  padding: 0;
   text-align: center;
-  color: '#fff';
+  font-family: 'Open Sans', sans-serif;
   display: flex;
-  background: #232526;  /* fallback for old browsers */  /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-linear-gradient(left, #414345, #232526);
-  background: -o-linear-gradient(left, #414345, #232526);
-  background: linear-gradient(to right, #414345, #232526); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+  height: 100vh; 
+  background: #12c2e9;  
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(left, #f64f59, #c471ed, #12c2e9);
+  background: -o-linear-gradient(left, #f64f59, #c471ed, #12c2e9);
+  background: linear-gradient(to right, #f64f59, #c471ed, #12c2e9);  
+  /* Chrome 10-25, Safari 5.1-6 */ /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+
 }
 
-.header {
+/*Login page*/
+.login-screen {
+  width: 100vw;
+  height: 100vh;
+  /*flex-direction: column;*/
+  /*justify-content: space-between;*/
+}
+
+.login-btn {
+  border: white 2px solid;
+  border-radius: 50px;
+  height: 80px;
+  width: 400px;
+  line-height: 0px;
+  font-size: 40px;
+  font-weight: bolder;
+  vertical-align: middle;
+  align-self: center; 
+    font-family: 'Knewave', cursive;
+}
+
+.login-btn:hover {
+  color: rgba(230, 28, 130);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.7), 0 10px 10px rgba(0, 0, 0, 0.7);   
+}
+/* User Page */
+/* Header */
+.banner {
+  display: flex; 
+  justify-content: space-between;
+  width: 100vw;
+  /*height: 300px;*/
+}
+
+.logo { 
+  font-size: 48px;
+  color: white;
+  font-family: 'Knewave', cursive;
+}
+
+.logo, .profile-div {
+  margin: 25px;
   padding: 20px;
-  /*background-color: #222;*/
-  width: 100vw;   
-  color: pink;
-  font-size: 54px;
+}
+
+
+.profile-pic {
+  border-radius: 50%;
+  margin-bottom: 10px;
+  width: 75%;
+  -webkit-box-shadow: 16px 17px 64px 0px rgba(247,247,247,1);
+  -moz-box-shadow: 16px 17px 64px 0px rgba(247,247,247,1);
+  box-shadow: 16px 17px 64px 0px rgba(247,247,247,1);
+}
+
+.counters {
+  /*display: block;   */
+  width: 100vw;
+}
+
+.counter {
+  display: inline-block;
+  width: 40%;
+}
+
+h5 {
+  font-size: 2rem;
+  margin: 5px 0 0 0;
+  font-style: italic;
+  color: white;  
+}
+
+h4 {
+  font-size: 3rem;
+  color: white;
+}
+
+h3 {
+
 }
 /*search input*/
 input {
   width: 70vw;
+  height: 20px;
+  font-size: 30px;
+  padding: 10px;
+  margin: 20px;
 }
 /*render playlists carousel style*/
 .playlist-display {
@@ -29,7 +112,6 @@ input {
   flex-wrap: nowrap;
   overflow-x: auto;  
   max-width: 100vw;
-  background-color: white;
   /*overflow-y: hidden;  */
 }
 
@@ -40,6 +122,8 @@ input {
   padding: 8px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   transition: all ease-in-out .3s; 
+  background-color: white;
+  color: rgba(230, 28, 130);
 }
 .playlist-div img {
   width: 250px;
@@ -48,32 +132,35 @@ input {
 }
 /* make divs pop and color change on hover */
 .playlist-div:hover {
-  color: rgba(230, 28, 130);
+  color: white;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22); 
+    /*color: white;*/
 }
 .playlist-div:hover::after, .playlist-div:hover, .playlist-div:hover img {
   filter: none;
   -webkit-filter: none;
   mix-blend-mode: hard-light !important;
   background: transparent;
+
 }
-/*.blue-red{
-  background-color: #E61C82;
-}*/
+
 .playlist-div:hover img {
   width: 254px;
 }
-.blue-red img{
+
+/*.blue-red img{
   -webkit-filter: grayscale(100%) contrast(1.2);
     filter: grayscale(100%) contrast(1.2);
   opacity:.8;
 }
+
 .blue-red::after{
    mix-blend-mode: lighten;
     -webkit-filter: contrast(1.1);
     filter: contrast(1.1); 
   background-color: #282581;
-}
+}*/
+
 
 /*track list*/
 .tracklist table {

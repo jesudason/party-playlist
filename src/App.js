@@ -3,63 +3,15 @@ import './App.css';
 import FaArrowUp from 'react-icons/lib/fa/arrow-up';
 import FaArrowDown from 'react-icons/lib/fa/arrow-down';
 import FaTimesCircle from 'react-icons/lib/fa/times-circle';
-// import queryString from 'query-string'
+import PlaylistCounter from './PlaylistCounter';
+import HoursCounter from './HoursCounter';
+import Filter from './Filter';
+import LoginScreen from './LoginScreen'
+import UserHeading from './UserHeading'
 
 let defaultStyle = {
   color: '#fff'
 };
-// let fakeServerData = {
-//   user: {
-//     name: 'Nicole',
-//     playlists: [
-//       {
-//         name: 'my faves',
-//         songs: [
-//           {name: 'Beat it', duration:1345},
-//           {name: 'Song 2', duration: 1236}, 
-//           {name: 'Pinacoladas', duration: 70000}
-//         ]
-//       }
-//     ]
-//   },
-// };
-
-class PlaylistCounter extends Component {
-  render() {
-    return (
-      <div style={{...defaultStyle, width: "40%", display: "inline-block"}}>
-        <h2>{this.props.playlists.length} playlists</h2>
-      </div>
-    );
-  }
-}
-
-class HoursCounter extends Component {
-  render() {
-    let allSongs = this.props.playlists.reduce((songs, eachPlaylist) => {
-      return songs.concat(eachPlaylist.songs)
-    }, [])
-    let totalDuration = allSongs.reduce((sum, eachSong) => {
-      return sum + eachSong.duration
-    }, 0)
-    return (
-      <div style={{...defaultStyle, width: "40%", display: "inline-block"}}>
-        <h2>{Math.round(totalDuration/60)} hours</h2>
-      </div>
-    );
-  }
-}
-
-class Filter extends Component {
-  render() {
-    return (
-      <div style={defaultStyle}>
-        <img alt=""/>
-        <input type="text" onKeyUp={event => this.props.onTextChange(event.target.value)} placeholder="playlist search"/>
-      </div>
-    );
-  }
-}
 
 class Playlist extends Component {
   render() {
@@ -131,7 +83,8 @@ class App extends Component {
     }).then(response => response.json())
     .then(data => this.setState({
       user: {
-        name: data.display_name
+        name: data.display_name,
+        img: data.images[0].url
       }
     }))
 
@@ -176,8 +129,8 @@ class App extends Component {
         }
     })
     }))    
-  
   }
+
   handleClick = (event) => {
     this.setState({currentPlaylist: event.target})
     console.log(this.state.currentPlaylist)
@@ -201,11 +154,16 @@ class App extends Component {
         {this.state.user ? 
         <div>
           <div className="header">
-            <h1>
-              {this.state.user.name}'s Playlist
-            </h1>   
-            <PlaylistCounter playlists={playlistToRender}/>
-            <HoursCounter playlists={playlistToRender}/>
+            <div className="banner">
+              <div className="logo">
+                <h2>Party Playlist</h2>
+              </div>
+              <UserHeading user={this.state.user}/>
+            </div>
+            <div className="counters">
+              <PlaylistCounter playlists={playlistToRender}/>
+              <HoursCounter playlists={playlistToRender}/>
+            </div>
             <Filter onTextChange={text => {
               this.setState({filterString: text})
             }}/>
@@ -219,12 +177,7 @@ class App extends Component {
           {this.state.currentPlaylist &&
             <PlaylistTrackList currentPlaylist={this.state.currentPlaylist} tracks={playlistTracksToRender}/>}
 
-        </div> : <button onClick={() => {
-          window.location = window.location.href.includes('localhost')
-            ? 'http://localhost:8888/login'
-            : 'https://playlistparty-backend.herokuapp.com/' }
-          }
-          style={{padding: '20px', 'fontSize': '20px', 'marginTop': '20px'}}>Sign In to Spotify</button>
+        </div> : <LoginScreen/>
         }
       </div>
     );
