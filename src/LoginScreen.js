@@ -11,7 +11,7 @@ export default class LoginScreen extends Component {
         <button className="login-btn" onClick={() => {
           window.location = window.location.href.includes('localhost')
             ? 'http://localhost:8888/login'
-            : 'https://playlistparty-backend.herokuapp.com/' }
+            : 'https://playlistparty-backend.herokuapp.com/login' }
           }>Sign In to Spotify</button>
       </div>
     );
