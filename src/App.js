@@ -1,68 +1,16 @@
 import React, { Component } from 'react';
 import './App.css';
-import FaArrowUp from 'react-icons/lib/fa/arrow-up';
-import FaArrowDown from 'react-icons/lib/fa/arrow-down';
-import FaTimesCircle from 'react-icons/lib/fa/times-circle';
 import PlaylistCounter from './PlaylistCounter';
 import HoursCounter from './HoursCounter';
 import Filter from './Filter';
 import LoginScreen from './LoginScreen'
 import UserHeading from './UserHeading'
+import Playlist from './Playlist'
+import PlaylistTrackList from './PlaylistTrackList'
 
 let defaultStyle = {
   color: '#fff'
 };
-
-class Playlist extends Component {
-  render() {
-    let playlist = this.props.playlist;
-    let handleClick = this.props.handleClick;
-
-    return (
-      <div className="playlist-div blue-red" onClick={handleClick} id={playlist.id} >
-        <img alt="" src={playlist.imageUrl} id={playlist.id}/>
-        <h3 id={playlist.id} >{playlist.name}</h3>
-      </div>
-    );
-  }
-}
-
-class PlaylistTrackList extends Component {
-  render() {
-    let currentPlaylist = this.props.currentPlaylist
-    let songs = this.props.tracks && this.props.tracks.songs
-    return (
-      <div className="tracklist">
-        <table>
-          <thead>
-            <tr>
-              <th>Song Title</th>
-              <th>Artist</th>
-              <th>Vote</th>
-            </tr>
-          </thead>
-          <tbody>
-            {songs.map(song =>
-              <tr key={song.id} >
-                <th>{song.name}</th>
-                <th>
-                  {song.artists.map(artist => 
-                    <span key={artist.name}>{artist.name} </span>
-                  )}
-                </th>
-                <th>
-                  <span className="up-icon"><FaArrowUp data-tag={currentPlaylist.id}/></span> &ensp;
-                  <span className="down-icon"><FaArrowDown data-tag={currentPlaylist.id}/></span>&ensp; 
-                  <span className="delete-icon"><FaTimesCircle data-tag={song.id}/></span>
-                </th>
-              </tr>
-            )}
-          </tbody>  
-        </table>        
-      </div>
-    );
-  }  
-}
 
 class App extends Component {
   constructor() {

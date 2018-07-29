@@ -22,8 +22,6 @@ html {
 .login-screen {
   width: 100vw;
   height: 100vh;
-  /*flex-direction: column;*/
-  /*justify-content: space-between;*/
 }
 
 .login-btn {
@@ -100,40 +98,6 @@ h2 {
   margin: 5px;
 }
 
-@media only screen and (max-width: 600px) {
-  .logo {
-    font-size: 2.5em;
-    margin: 5px;
-  }
-
-  .profile-pic {
-    width: 45%;
-    vertical-align: baseline;
-  }
-
-  h4 {
-    font-size: 1.5em;
-    margin: 5px; 
-  }
-
-  div input {
-    text-align: center;
-    width: 90vw;
-    margin: 15px 0;
-    border-radius: 5px;
-  }
-
-  .playlist-div img {
-    width: 100px;
-  }
-
-/*  .tracklist table {
-    width: 100vw;
-    margin: 0;
-  }*/
-}
-
-
 /*search input*/
 input {
   width: 70vw;
@@ -177,44 +141,120 @@ input {
   -webkit-filter: none;
   mix-blend-mode: hard-light !important;
   background: transparent;
-
 }
-
-.playlist-div:hover img {
-  width: 254px;
-}
-
-/*.blue-red img{
-  -webkit-filter: grayscale(100%) contrast(1.2);
-    filter: grayscale(100%) contrast(1.2);
-  opacity:.8;
-}
-
-.blue-red::after{
-   mix-blend-mode: lighten;
-    -webkit-filter: contrast(1.1);
-    filter: contrast(1.1); 
-  background-color: #282581;
-}*/
-
 
 /*track list*/
 .tracklist {
   background: none;
-  margin: 0;
+  margin: 20px;
   /*height: 100%;*/
 }
 
 .tracklist table {
-  width: 100vw;
   color: white;
   font-size: 16px;
-  border: grey solid 1px;
-  /*margin: 0 auto;*/
-
+  width: 98vw;
+  padding: 20px;
+  margin: 0 auto;
+  border: solid lightgrey 1px;
+  background: rgba(0, 0, 0, 0.2);
 }
 
-thead {
-  color: #E61C82;
-  font-size: 28px;
+thead tr th {
+  font-size: 32px;
+  font-weight: bolder;
+  margin: 20px;
+  padding-bottom: 15px;
+  border-bottom: solid lightgrey 2px;
+}
+
+tbody tr th {
+  font-size: 20px;
+  padding: 5px;
+}
+
+tbody tr:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.song-title, .artist {
+  width: 40vw;
+}
+
+@media only screen and (max-width: 600px) {
+  .logo {
+    font-size: 2.5em;
+    margin: 5px;
+  }
+
+  .profile-pic {
+    width: 45%;
+    vertical-align: baseline;
+  }
+
+  h4 {
+    font-size: 1.5em;
+    margin: 5px; 
+  }
+
+  div input {
+    text-align: center;
+    width: 90vw;
+    margin: 15px 0;
+    border-radius: 5px;
+  }
+
+  .playlist-div {
+    font-size: 16px;
+    width: 150px;
+  }
+
+  .playlist-div img {
+    width: 150px;
+  }
+
+  .tracklist {
+    margin: 0;
+  }
+  
+  .tracklist table {
+    width: 95vw;
+    padding: 3px;
+  }
+
+  thead {
+    display: none;
+  }
+  
+  tr {
+    display: flex;
+    /*flex-direction: column;*/
+    flex-wrap: wrap;
+    justify-content: space-between;
+    text-align: left;
+    border-bottom: solid grey 1px;
+  }
+
+  .artist span  {
+    font-size: 12px;
+  }
+
+  tbody tr th {
+    padding: 0;
+  }
+
+  .song-title {
+    order: 0;
+    width: 70%;
+    font-size: 14px;
+  }
+
+  .icons {
+    order: 1;
+  }
+
+  .artist {
+    order: 2;
+    width: 100%;    
+  }
 }
