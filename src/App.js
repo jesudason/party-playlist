@@ -108,8 +108,7 @@ class App extends Component {
             playlists[thisPlaylistIndex].songs = temp;
             this.setState({playlists});
           })
-
-        }).then(console.log(this.state)) 
+        })
     }
 
   render() {

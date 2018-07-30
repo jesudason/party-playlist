@@ -11,7 +11,7 @@ export default class PlaylistTrackList extends Component {
     let refreshPlaylist = this.props.refreshPlaylist;
     let refreshUrl = 'https://api.spotify.com/v1/users/me/playlists/' + currentPlaylist.id;
     let url = refreshUrl + '/tracks'; 
-    let songs = this.props.tracks.songs
+    let songs = this.props.tracks.songs;
     
     let upVote = (event) => {
       event.preventDefault();
@@ -62,6 +62,24 @@ export default class PlaylistTrackList extends Component {
           .then(refreshPlaylist)
       }
     }
+
+    let deleteFromPlaylist = (event) => {
+      event.preventDefault();
+      let uris = 'spotify:track:' + event.currentTarget.dataset.tag;
+      const data = {
+        'tracks' : [{"uri": uris}]
+      }
+      fetch(url, {
+        method: 'DELETE',
+        body: JSON.stringify(data),     
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + accessToken
+        }
+      }).catch(error => console.log('Error:', error))
+        .then(refreshPlaylist)    
+    }
     
     return (
       <div className="tracklist">
@@ -84,8 +102,8 @@ export default class PlaylistTrackList extends Component {
                 </th>
                 <th className="icons">
                   <span className="up-icon"><FaArrowUp data-tag={currentPlaylist.id} id={songs.indexOf(song)} onClick={upVote}/></span> &ensp;
-                  <span className="down-icon"><FaArrowDown data-tag={currentPlaylist.id} id={songs.indexOf(song)} onClick={downVote}/></span>&ensp; 
-                  <span className="delete-icon"><FaTimesCircle data-tag={song.id}/></span>
+                  <span className="down-icon"><FaArrowDown key={currentPlaylist.id} id={songs.indexOf(song)} onClick={downVote}/></span>&ensp; 
+                  <span className="delete-icon"><FaTimesCircle data-tag={song.id} onClick={deleteFromPlaylist}/></span>
                 </th>
               </tr>
             )}
