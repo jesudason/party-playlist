@@ -18,12 +18,14 @@ class App extends Component {
     this.state = {
       serverData: {},
       filterString: '',
-      currentPlaylist: ''
+      currentPlaylist: '',
+      accessToken: ''
     }
   }
   componentDidMount() {
     let params = (new URL(document.location)).searchParams;
     let accessToken = params.get("access_token");
+    this.setState({accessToken: accessToken})
     if (!accessToken)
       return;
     fetch('https://api.spotify.com/v1/me', {
@@ -81,8 +83,35 @@ class App extends Component {
 
   handleClick = (event) => {
     this.setState({currentPlaylist: event.target})
-    console.log(this.state.currentPlaylist)
   }
+
+    // function to retrieve the new song order from spotify
+  refreshPlaylist = () => {
+    let thisPlaylist = this.state.playlists.find(playlist => playlist.id === this.state.currentPlaylist.id)
+    let thisPlaylistIndex = this.state.playlists.indexOf(thisPlaylist);
+    let refreshUrl = 'https://api.spotify.com/v1/users/me/playlists/' + this.state.currentPlaylist.id;
+    let playlists = this.state.playlists;
+      fetch(refreshUrl, {
+        headers: {'Authorization': 'Bearer ' + this.state.accessToken}
+      }).then(response => response.json())
+        .then(data => {
+          let songsPromise = data.tracks.items;
+
+          return Promise.all(songsPromise).then(songsData => {
+            let temp = songsData.map(song => {
+                return {
+                  name: song.track.name,
+                  duration:song.track.duration_ms / 1000,
+                  id: song.track.id,
+                  artists: song.track.artists
+                }
+              })
+            playlists[thisPlaylistIndex].songs = temp;
+            this.setState({playlists});
+          })
+
+        }).then(console.log(this.state)) 
+    }
 
   render() {
     let playlistToRender = 
@@ -123,7 +152,7 @@ class App extends Component {
           </div>
 
           {this.state.currentPlaylist &&
-            <PlaylistTrackList currentPlaylist={this.state.currentPlaylist} tracks={playlistTracksToRender}/>}
+            <PlaylistTrackList currentPlaylist={this.state.currentPlaylist} tracks={playlistTracksToRender} accessToken={this.state.accessToken} refreshPlaylist={this.refreshPlaylist} />}
 
         </div> : <LoginScreen/>
         }
