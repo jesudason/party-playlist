@@ -5,38 +5,39 @@ import FaTimesCircle from 'react-icons/lib/fa/times-circle';
 
 export default class PlaylistTrackList extends Component {
 
-  upVote = (event) => {
-    event.preventDefault();
-    let refreshPlaylist = this.props.refreshPlaylist;
+  render() {
     let accessToken = this.props.accessToken;
     let currentPlaylist = this.props.currentPlaylist;
-    let currentSongPosition = Number(event.currentTarget.id);
+    let refreshPlaylist = this.props.refreshPlaylist;
     let refreshUrl = 'https://api.spotify.com/v1/users/me/playlists/' + currentPlaylist.id;
     let url = refreshUrl + '/tracks'; 
-    const data = {
-      'range_start': currentSongPosition,
-      'range_length': 1,
-      'insert_before': currentSongPosition - 1
+    let songs = this.props.tracks.songs
+    
+    let upVote = (event) => {
+      event.preventDefault();
+      let currentSongPosition = Number(event.currentTarget.id);
+      // tell spotify how you want the tracks to move
+      const data = {
+        'range_start': currentSongPosition,
+        'range_length': 1,
+        'insert_before': currentSongPosition - 1
+      }
+      // if song is not first in the playlist, move it up the playlist, then retrieve new order from spotify 
+      if (currentSongPosition !== 0) {
+        fetch(url, {
+          method: 'PUT',
+          body: JSON.stringify(data), 
+          redirect: 'follow',    
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + accessToken
+          }
+        }).catch(error => console.log('Error:', error))
+          .then(refreshPlaylist)
+      }
     }
-
-    // if song is not first in the playlist, move it up the playlist, then retrieve new order from spotify 
-    if (currentSongPosition !== 0) {
-      fetch(url, {
-        method: 'PUT',
-        body: JSON.stringify(data), 
-        redirect: 'follow',    
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + accessToken
-        }
-      }).catch(error => console.log('Error:', error))
-        .then(refreshPlaylist)
-    }
-  }
-  render() {
-    let currentPlaylist = this.props.currentPlaylist
-    let songs = this.props.tracks && this.props.tracks.songs
+    
     return (
       <div className="tracklist">
         <table>
@@ -57,7 +58,7 @@ export default class PlaylistTrackList extends Component {
                   )}
                 </th>
                 <th className="icons">
-                  <span className="up-icon"><FaArrowUp data-tag={currentPlaylist.id} id={songs.indexOf(song)} onClick={this.upVote}/></span> &ensp;
+                  <span className="up-icon"><FaArrowUp data-tag={currentPlaylist.id} id={songs.indexOf(song)} onClick={upVote}/></span> &ensp;
                   <span className="down-icon"><FaArrowDown data-tag={currentPlaylist.id} id={song.position}/></span>&ensp; 
                   <span className="delete-icon"><FaTimesCircle data-tag={song.id}/></span>
                 </th>

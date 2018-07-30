@@ -96,7 +96,6 @@ class App extends Component {
       }).then(response => response.json())
         .then(data => {
           let songsPromise = data.tracks.items;
-
           return Promise.all(songsPromise).then(songsData => {
             let temp = songsData.map(song => {
                 return {
