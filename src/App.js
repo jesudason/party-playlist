@@ -132,7 +132,7 @@ class App extends Component {
           <div className="header">
             <div className="banner">
               <div className="logo">
-                <h2>Party Playlist</h2>
+                <h2>Playlist Party</h2>
               </div>
               <UserHeading user={this.state.user}/>
             </div>
