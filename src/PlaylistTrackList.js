@@ -37,6 +37,31 @@ export default class PlaylistTrackList extends Component {
           .then(refreshPlaylist)
       }
     }
+
+    let downVote = (event) => {
+      event.preventDefault();
+      let currentSongPosition = Number(event.currentTarget.id);
+      // tell spotify how you want the tracks to move
+      const data = {
+        'range_start': currentSongPosition,
+        'range_length': 1,
+        'insert_before': currentSongPosition + 2
+      }
+      // if song is not first in the playlist, move it up the playlist, then retrieve new order from spotify 
+      if (currentSongPosition !== songs.length -1) {
+        fetch(url, {
+          method: 'PUT',
+          body: JSON.stringify(data), 
+          redirect: 'follow',    
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + accessToken
+          }
+        }).catch(error => console.log('Error:', error))
+          .then(refreshPlaylist)
+      }
+    }
     
     return (
       <div className="tracklist">
@@ -59,7 +84,7 @@ export default class PlaylistTrackList extends Component {
                 </th>
                 <th className="icons">
                   <span className="up-icon"><FaArrowUp data-tag={currentPlaylist.id} id={songs.indexOf(song)} onClick={upVote}/></span> &ensp;
-                  <span className="down-icon"><FaArrowDown data-tag={currentPlaylist.id} id={song.position}/></span>&ensp; 
+                  <span className="down-icon"><FaArrowDown data-tag={currentPlaylist.id} id={songs.indexOf(song)} onClick={downVote}/></span>&ensp; 
                   <span className="delete-icon"><FaTimesCircle data-tag={song.id}/></span>
                 </th>
               </tr>
