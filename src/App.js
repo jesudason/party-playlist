@@ -7,10 +7,7 @@ import LoginScreen from './LoginScreen'
 import UserHeading from './UserHeading'
 import Playlist from './Playlist'
 import PlaylistTrackList from './PlaylistTrackList'
-
-let defaultStyle = {
-  color: '#fff'
-};
+import SearchInput from './SearchInput'
 
 class App extends Component {
   constructor() {
@@ -80,12 +77,18 @@ class App extends Component {
     })
     }))    
   }
-
   handleClick = (event) => {
     this.setState({currentPlaylist: event.target})
+    let counters = document.getElementById('counters');
+    counters.hidden = 'true'
   }
-
-    // function to retrieve the new song order from spotify
+  showSearchResDiv = (event) => {
+    event.preventDefault();
+    console.log('test')
+    let trackSearchDiv = document.getElementById('track-search-div');
+    trackSearchDiv.style.display = 'block';
+  }
+  // function to retrieve the new song order from spotify
   refreshPlaylist = () => {
     let thisPlaylist = this.state.playlists.find(playlist => playlist.id === this.state.currentPlaylist.id)
     let thisPlaylistIndex = this.state.playlists.indexOf(thisPlaylist);
@@ -110,7 +113,6 @@ class App extends Component {
           })
         })
     }
-
   render() {
     let playlistToRender = 
       this.state.user && 
@@ -123,7 +125,7 @@ class App extends Component {
       this.state.currentPlaylist &&
       this.state.playlists
         ? this.state.playlists.find(playlist => playlist.id === this.state.currentPlaylist.id)
-        : [];    
+        : [];   
     return (
       <div className="App">
         {this.state.user ? 
@@ -135,7 +137,8 @@ class App extends Component {
               </div>
               <UserHeading user={this.state.user}/>
             </div>
-            <div className="counters">
+            <SearchInput handleSearch={this.handleSearch} accessToken={this.state.accessToken}/>
+            <div id="counters">
               <PlaylistCounter playlists={playlistToRender}/>
               <HoursCounter playlists={playlistToRender}/>
             </div>
@@ -150,7 +153,7 @@ class App extends Component {
           </div>
 
           {this.state.currentPlaylist &&
-            <PlaylistTrackList currentPlaylist={this.state.currentPlaylist} tracks={playlistTracksToRender} accessToken={this.state.accessToken} refreshPlaylist={this.refreshPlaylist} />}
+            <PlaylistTrackList currentPlaylist={this.state.currentPlaylist} tracks={playlistTracksToRender} accessToken={this.state.accessToken} refreshPlaylist={this.refreshPlaylist} showSearchResDiv={this.showSearchResDiv} />}
 
         </div> : <LoginScreen/>
         }

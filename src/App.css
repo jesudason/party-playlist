@@ -181,6 +181,10 @@ tbody tr:hover {
   width: 40vw;
 }
 
+.add-tracks-btn {
+  float: left;
+}
+
 @media only screen and (max-width: 600px) {
   .logo {
     font-size: 2.5em;
@@ -258,3 +262,13 @@ tbody tr:hover {
     width: 100%;    
   }
 }
+
+/* Track Search Div */
+
+#track-search-div {
+  display: none;
+  background: rgba(0, 0, 0, 0.3);
+  margin: 0 auto;
+  height: 100vh;
+}
+

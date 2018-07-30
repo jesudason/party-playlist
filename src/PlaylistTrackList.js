@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import FaArrowUp from 'react-icons/lib/fa/arrow-up';
 import FaArrowDown from 'react-icons/lib/fa/arrow-down';
 import FaTimesCircle from 'react-icons/lib/fa/times-circle';
+import FaPlus from 'react-icons/lib/fa/plus'
 
 export default class PlaylistTrackList extends Component {
 
@@ -12,6 +13,7 @@ export default class PlaylistTrackList extends Component {
     let refreshUrl = 'https://api.spotify.com/v1/users/me/playlists/' + currentPlaylist.id;
     let url = refreshUrl + '/tracks'; 
     let songs = this.props.tracks.songs;
+    let showSearchResDiv = this.props.showSearchResDiv;
     
     let upVote = (event) => {
       event.preventDefault();
@@ -86,7 +88,7 @@ export default class PlaylistTrackList extends Component {
         <table>
           <thead>
             <tr>
-              <th>Song Title</th>
+              <th><a title="Add Songs to Playlist"><FaPlus className="add-tracks-btn" onClick={showSearchResDiv}/>Song Title</a></th>
               <th>Artist</th>
               <th>Vote</th>
             </tr>
