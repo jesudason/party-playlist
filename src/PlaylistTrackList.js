@@ -86,6 +86,7 @@ export default class PlaylistTrackList extends Component {
     return (
       <div className="tracklist">
         <table>
+          <p className="add-tracks-btn-mobile" title="Load track search" onClick={showSearchResDiv}><FaPlus/> Add Songs to Playlist</p>
           <thead>
             <tr>
               <th><a title="Add Songs to Playlist"><FaPlus className="add-tracks-btn" onClick={showSearchResDiv}/>Song Title</a></th>
@@ -97,11 +98,7 @@ export default class PlaylistTrackList extends Component {
             {songs.map(song =>
               <tr key={song.id} >
                 <th className="song-title">{song.name}</th>
-                <th className="artist">
-                  {song.artists.map(artist => 
-                    <span key={artist.name}>{artist.name} </span>
-                  )}
-                </th>
+                <th className="artist">{song.artists.map(artist => artist.name)}</th>
                 <th className="icons">
                   <span className="up-icon"><FaArrowUp data-tag={currentPlaylist.id} id={songs.indexOf(song)} onClick={upVote}/></span> &ensp;
                   <span className="down-icon"><FaArrowDown key={currentPlaylist.id} id={songs.indexOf(song)} onClick={downVote}/></span>&ensp; 

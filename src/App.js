@@ -84,9 +84,11 @@ class App extends Component {
   }
   showSearchResDiv = (event) => {
     event.preventDefault();
-    console.log('test')
+    console.log(this.state.currentPlaylist)
     let trackSearchDiv = document.getElementById('track-search-div');
+    let playlistFilter = document.getElementById('playlist-filter');
     trackSearchDiv.style.display = 'block';
+    playlistFilter.style.display = 'none';
   }
   // function to retrieve the new song order from spotify
   refreshPlaylist = () => {
@@ -113,6 +115,7 @@ class App extends Component {
           })
         })
     }
+
   render() {
     let playlistToRender = 
       this.state.user && 
@@ -137,7 +140,7 @@ class App extends Component {
               </div>
               <UserHeading user={this.state.user}/>
             </div>
-            <SearchInput handleSearch={this.handleSearch} accessToken={this.state.accessToken}/>
+            <SearchInput handleSearch={this.handleSearch} accessToken={this.state.accessToken} refreshPlaylist={this.refreshPlaylist} currentPlaylist={this.state.currentPlaylist} />
             <div id="counters">
               <PlaylistCounter playlists={playlistToRender}/>
               <HoursCounter playlists={playlistToRender}/>

@@ -146,8 +146,6 @@ input {
 /*track list*/
 .tracklist {
   background: none;
-  margin: 20px;
-  /*height: 100%;*/
 }
 
 .tracklist table {
@@ -163,7 +161,6 @@ input {
 thead tr th {
   font-size: 32px;
   font-weight: bolder;
-  margin: 20px;
   padding-bottom: 15px;
   border-bottom: solid lightgrey 2px;
 }
@@ -183,6 +180,20 @@ tbody tr:hover {
 
 .add-tracks-btn {
   float: left;
+}
+
+.add-tracks-btn-mobile {
+  display: none;
+}
+
+
+/* Track Search Div */
+
+#track-search-div {
+  display: none;
+  background: rgba(0, 0, 0, 0.3);
+  margin: 0 auto;
+  /*height: 100vh;*/
 }
 
 @media only screen and (max-width: 600px) {
@@ -217,29 +228,19 @@ tbody tr:hover {
     width: 150px;
   }
 
-  .tracklist {
-    margin: 0;
-  }
-  
-  .tracklist table {
-    width: 95vw;
-    padding: 3px;
-  }
-
   thead {
     display: none;
   }
   
   tr {
     display: flex;
-    /*flex-direction: column;*/
     flex-wrap: wrap;
     justify-content: space-between;
     text-align: left;
     border-bottom: solid grey 1px;
   }
 
-  .artist span  {
+  .artist, .album {
     font-size: 12px;
   }
 
@@ -261,14 +262,24 @@ tbody tr:hover {
     order: 2;
     width: 100%;    
   }
+
+  .add-tracks-btn-mobile {
+    display: block; 
+    float: left;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    transition: all ease-in-out .3s; 
+    padding: 3px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background-color: rgba(255, 255, 255, 0.3);
+    font-size: 15px;
+  }
+
+  .add-tracks-btn-mobile:hover {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  }
+
+  .add-tracks-btn-mobile p {
+
+  }
 }
-
-/* Track Search Div */
-
-#track-search-div {
-  display: none;
-  background: rgba(0, 0, 0, 0.3);
-  margin: 0 auto;
-  height: 100vh;
-}
-
