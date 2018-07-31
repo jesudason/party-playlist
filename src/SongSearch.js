@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import FaPlus from 'react-icons/lib/fa/plus';
+import React, { Component } from 'react'; import FaPlus from 'react-icons/lib/fa/plus';
 import FaMinus from 'react-icons/lib/fa/minus';
 
 export default class SongSearch extends Component {
@@ -91,7 +90,7 @@ export default class SongSearch extends Component {
                       <th className="song-title">{song.name}</th>
                       <th className="artist">{song.artists.map(artist => artist.name + ' ')}</th>
                       <th className="album">{song.album}</th>
-                      <th><a title="Add Songs to Playlist"><FaPlus id={song.id} className="add-to-playlist" onClick={this.addToPlaylist}/></a></th>
+                      <th><a title="Add Songs to Playlist"><FaPlus id={song.id} className="add-to-playlist icon" onClick={this.addToPlaylist}/></a></th>
                     </tr>
                 )} 
               </tbody>

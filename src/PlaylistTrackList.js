@@ -100,9 +100,9 @@ export default class PlaylistTrackList extends Component {
                 <th className="song-title">{song.name}</th>
                 <th className="artist">{song.artists.map(artist => artist.name)}</th>
                 <th className="icons">
-                  <span className="up-icon"><FaArrowUp data-tag={currentPlaylist.id} id={songs.indexOf(song)} onClick={upVote}/></span> &ensp;
-                  <span className="down-icon"><FaArrowDown key={currentPlaylist.id} id={songs.indexOf(song)} onClick={downVote}/></span>&ensp; 
-                  <span className="delete-icon"><FaTimesCircle data-tag={song.id} onClick={deleteFromPlaylist}/></span>
+                  <span className="up-icon icon"><FaArrowUp data-tag={currentPlaylist.id} id={songs.indexOf(song)} onClick={upVote}/></span> &ensp;
+                  <span className="down-icon icon"><FaArrowDown key={currentPlaylist.id} id={songs.indexOf(song)} onClick={downVote}/></span>&ensp; 
+                  <span className="delete-icon icon"><FaTimesCircle data-tag={song.id} onClick={deleteFromPlaylist}/></span>
                 </th>
               </tr>
             )}
