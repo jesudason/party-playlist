@@ -47,7 +47,8 @@ export default class SearchInput extends Component {
     let currentPlaylist = this.props.currentPlaylist;
     let songId = event.currentTarget.id;
     let uris = 'spotify:track:' + songId;
-    let url = 'https://api.spotify.com/v1/me/playlists' + currentPlaylist.id + '/tracks?uris=' + uris;
+    let url = 'https://api.spotify.com/v1/users/me/playlists/' + currentPlaylist.id + '/tracks?uris=' + uris;
+    console.log(url)
     let accessToken = this.props.accessToken;
     const data = {
       'uris': uris
