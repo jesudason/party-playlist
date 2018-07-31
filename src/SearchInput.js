@@ -85,15 +85,14 @@ export default class SearchInput extends Component {
                 </tr>
               </thead>
               <tbody>
-                {songs.map(song => {
-                  return 
-                  <tr className="highlight-on-select" key={song.id}>
-                    <th className="song-title">{song.name}</th>
-                    <th className="artist">{song.artists.map(artist => artist.name + ' ')}</th>
-                    <th className="album">{song.album}</th>
-                    <th><a title="Add Songs to Playlist"><FaPlus id={song.id} className="add-to-playlist" onClick={this.addToPlaylist}/></a></th>
-                  </tr>
-                })}
+                {songs.map(song => 
+                    <tr className="highlight-on-select" key={song.id}>
+                      <th className="song-title">{song.name}</th>
+                      <th className="artist">{song.artists.map(artist => artist.name + ' ')}</th>
+                      <th className="album">{song.album}</th>
+                      <th><a title="Add Songs to Playlist"><FaPlus id={song.id} className="add-to-playlist" onClick={this.addToPlaylist}/></a></th>
+                    </tr>
+                )} 
               </tbody>
             </table>
           </div> : ''   
@@ -102,4 +101,4 @@ export default class SearchInput extends Component {
     );
   }
 }
-                    
+             

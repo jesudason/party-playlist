@@ -213,7 +213,7 @@ tbody .highlight-on-select:hover {
 /* Track Search Div */
 #track-search-div {
   display: none;
-  /*background: rgba(0, 0, 0, 0.3);*/
+  background: rgba(0, 0, 0, 0.3);
   margin: 0 auto;
 }
 
