@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import FaPlus from 'react-icons/lib/fa/plus';
 import FaMinus from 'react-icons/lib/fa/minus';
 
-export default class SearchInput extends Component {
+export default class SongSearch extends Component {
   constructor() {
     super();
     this.state = {
@@ -19,7 +19,7 @@ export default class SearchInput extends Component {
     event.preventDefault();
     let input = event.target.value;
     let accessToken = this.props.accessToken;
-    let url = 'https://api.spotify.com/v1/search?q=' + input + '&type=track&limit=10'
+    let url = 'https://api.spotify.com/v1/search?q=' + input + '&type=track&limit=20'
     if (input.length > 2) {
       fetch(url, {
         headers: {

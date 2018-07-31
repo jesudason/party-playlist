@@ -7,7 +7,7 @@ import LoginScreen from './LoginScreen'
 import UserHeading from './UserHeading'
 import Playlist from './Playlist'
 import PlaylistTrackList from './PlaylistTrackList'
-import SearchInput from './SearchInput'
+import SongSearch from './SongSearch'
 
 class App extends Component {
   constructor() {
@@ -160,7 +160,7 @@ class App extends Component {
               </div>
               <UserHeading user={this.state.user}/>
             </div>
-            <SearchInput handleSearch={this.handleSearch} accessToken={this.state.accessToken} refreshPlaylist={this.refreshPlaylist} currentPlaylist={this.state.currentPlaylist} hideSearchResDiv={this.hideSearchResDiv}/>
+            <SongSearch handleSearch={this.handleSearch} accessToken={this.state.accessToken} refreshPlaylist={this.refreshPlaylist} currentPlaylist={this.state.currentPlaylist} hideSearchResDiv={this.hideSearchResDiv}/>
             <div id="counters">
               <PlaylistCounter playlists={playlistToRender}/>
               <HoursCounter playlists={playlistToRender}/>
