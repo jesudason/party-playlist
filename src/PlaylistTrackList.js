@@ -84,19 +84,19 @@ export default class PlaylistTrackList extends Component {
     }
     
     return (
-      <div className="tracklist">
+      <div className="tracklist" id="tracklist">
+        <p className="add-tracks-btn" id="show-search-btn" title="Load track search" onClick={showSearchResDiv}><FaPlus/> Add Songs to Playlist</p>
         <table>
-          <p className="add-tracks-btn-mobile" title="Load track search" onClick={showSearchResDiv}><FaPlus/> Add Songs to Playlist</p>
           <thead>
             <tr>
-              <th><a title="Add Songs to Playlist"><FaPlus className="add-tracks-btn" onClick={showSearchResDiv}/>Song Title</a></th>
+              <th><a title="Add Songs to Playlist">Song Title</a></th>
               <th>Artist</th>
               <th>Vote</th>
             </tr>
           </thead>
           <tbody>
             {songs.map(song =>
-              <tr key={song.id} >
+              <tr className="highlight-on-select" key={song.id} >
                 <th className="song-title">{song.name}</th>
                 <th className="artist">{song.artists.map(artist => artist.name)}</th>
                 <th className="icons">

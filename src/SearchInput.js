@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import FaPlus from 'react-icons/lib/fa/plus'
+import FaPlus from 'react-icons/lib/fa/plus';
+import FaMinus from 'react-icons/lib/fa/minus';
 
 export default class SearchInput extends Component {
   constructor() {
@@ -68,7 +69,10 @@ export default class SearchInput extends Component {
 
     return (
       <div id="track-search-div">
-        <input type="text" onKeyUp={this.handleSearch} placeholder="search to add tracks"/>
+        <div className="input-div">
+          <input type="text" onKeyUp={this.handleSearch} placeholder="search to add tracks"/>
+        </div>
+        <p className="remove-search-btn" title="Load track search" onClick={this.props.hideSearchResDiv}>Hide Track Search <FaMinus/></p>
         { (songs.length > 0) ? 
           <div className="tracklist">
             <table>
@@ -82,10 +86,11 @@ export default class SearchInput extends Component {
               </thead>
               <tbody>
                 {songs.map(song => {
-                  return <tr key={song.id}>
-                    <th>{song.name}</th>
-                    <th>{song.artists.map(artist => artist.name)}</th>
-                    <th>{song.album}</th>
+                  return 
+                  <tr className="highlight-on-select" key={song.id}>
+                    <th className="song-title">{song.name}</th>
+                    <th className="artist">{song.artists.map(artist => artist.name + ' ')}</th>
+                    <th className="album">{song.album}</th>
                     <th><a title="Add Songs to Playlist"><FaPlus id={song.id} className="add-to-playlist" onClick={this.addToPlaylist}/></a></th>
                   </tr>
                 })}

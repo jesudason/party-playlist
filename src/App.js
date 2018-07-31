@@ -77,18 +77,38 @@ class App extends Component {
     })
     }))    
   }
+
   handleClick = (event) => {
     this.setState({currentPlaylist: event.target})
     let counters = document.getElementById('counters');
     counters.hidden = 'true'
   }
+
   showSearchResDiv = (event) => {
     event.preventDefault();
-    console.log(this.state.currentPlaylist)
     let trackSearchDiv = document.getElementById('track-search-div');
     let playlistFilter = document.getElementById('playlist-filter');
+    let playlistDiv = document.getElementById('playlist-div');
+    let tracklist = document.getElementById('tracklist');
+    let showSearchBtn = document.getElementById('show-search-btn')
     trackSearchDiv.style.display = 'block';
     playlistFilter.style.display = 'none';
+    playlistDiv.style.display = 'none';
+    showSearchBtn.style.display = 'none';
+    tracklist.style.display = 'none'
+  }
+
+  hideSearchResDiv = () => {
+    let trackSearchDiv = document.getElementById('track-search-div');
+    let playlistFilter = document.getElementById('playlist-filter');
+    let playlistDiv = document.getElementById('playlist-div');
+    let showSearchBtn = document.getElementById('show-search-btn');
+    let tracklist = document.getElementById('tracklist');
+    trackSearchDiv.style.display = 'none';
+    playlistFilter.style.display = 'block';
+    playlistDiv.style.display = 'flex';
+    showSearchBtn.style.display = 'block';
+    tracklist.style.display = 'block'
   }
   // function to retrieve the new song order from spotify
   refreshPlaylist = () => {
@@ -140,16 +160,16 @@ class App extends Component {
               </div>
               <UserHeading user={this.state.user}/>
             </div>
-            <SearchInput handleSearch={this.handleSearch} accessToken={this.state.accessToken} refreshPlaylist={this.refreshPlaylist} currentPlaylist={this.state.currentPlaylist} />
+            <SearchInput handleSearch={this.handleSearch} accessToken={this.state.accessToken} refreshPlaylist={this.refreshPlaylist} currentPlaylist={this.state.currentPlaylist} hideSearchResDiv={this.hideSearchResDiv}/>
             <div id="counters">
               <PlaylistCounter playlists={playlistToRender}/>
               <HoursCounter playlists={playlistToRender}/>
             </div>
             <Filter onTextChange={text => {
               this.setState({filterString: text})
-            }}/>
+            }}  />
           </div>
-          <div className="playlist-display">
+          <div className="playlist-display" id="playlist-div">
             {playlistToRender.map(playlist => 
               <Playlist playlist={playlist} key={playlist.id} handleClick={this.handleClick}/>
             )}
