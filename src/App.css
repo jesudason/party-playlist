@@ -54,6 +54,7 @@ html {
   font-size: 4em;
   color: white;
   font-family: 'Knewave', cursive;
+  text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
 }
 
 .logo, .profile-div {
@@ -179,36 +180,36 @@ tbody .highlight-on-select:hover {
 }
 
 .song-title {
-  width: 40vw;
+  width: 40%
 }
 
-/*.add-tracks-btn {
+.artist, .album {
+  width: 30%;
+}
+
+/* buttons for toggling search div view */
+.add-tracks-btn, .remove-search-btn {
+  display: block; 
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  transition: all ease-in-out .3s; 
+  padding: 10px;
+  border-radius: 5px;
+  margin: 0 20px 20px 20px;    
+  background-color: rgba(255, 255, 255, 0.3);
+  font-size: 28px;
+}
+
+.add-tracks-btn:hover, .remove-search-btn:hover {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.add-tracks-btn {
   float: left;
-  align-self: baseline;
-}*/
+}
 
-  .add-tracks-btn, .remove-search-btn {
-    display: block; 
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-    transition: all ease-in-out .3s; 
-    padding: 10px;
-    border-radius: 5px;
-    margin: 0 20px 20px 20px;
-    background-color: rgba(255, 255, 255, 0.3);
-    font-size: 28px;
-  }
-
-  .add-tracks-btn:hover, .remove-search-btn:hover {
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-  }
-
-  .add-tracks-btn {
-    float: left;
-  }
-
-  .remove-search-btn {
-    float: right;
-  }
+.remove-search-btn {
+  float: right;
+}
 
 /* Track Search Div */
 #track-search-div {

@@ -1,4 +1,4 @@
-### Party Playlist
+# Party Playlist
 Checkout the live app on <a href="https://playlistparty.herokuapp.com/">Heroku</a>
 Source code can be found on <a href="https://github.com/jesudason/party-playlist">Github</a> 
 

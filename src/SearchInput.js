@@ -62,7 +62,7 @@ export default class SearchInput extends Component {
         'Authorization': 'Bearer ' + accessToken
       }
     }).catch(error => console.log('Error:', error))
-      .then(this.props.refreshPlaylist)  
+      .then(this.props.refreshPlaylist) 
   }
 
   render() {
